@@ -1,0 +1,106 @@
+<%- include('header') %>
+  <div class="page-wrapper">
+    <div class="page-breadcrumb">
+      <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+          <h4 class="page-title">Tables</h4>
+          <div class="ms-auto text-end">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Library
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+      <!-- ============================================================== -->
+      <!-- Start Page Content -->
+      <!-- ============================================================== -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title mb-0">View Comment</h5>
+            </div>
+
+            <form>
+              <div>
+                <input type="text" name="search">
+                <input type="submit">
+              </div>
+            </form>
+
+            <form action="/admin/subcategory/multiRecorddelete" method="post">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" ><input type="checkbox" id="checkAll"><button type="submit"  value="submit" style="border: none; background-color: transparent;"><i class="me-2 mdi mdi-delete"
+                    style="color:gray; font-size: 25px;"></i></button></th>
+                  <th scope="col">#</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Title Category</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Content</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% var i=1; for(var po of subdata){ %>
+                  <tr>
+                    <th scope="row"><input type="checkbox" name="delAll[]" value="<%= po.id %>"></th>
+                    <th scope="row">
+                      <%= i %>
+                    </th>
+                    <td><img src="<%= po.subcat_image %>" height="70" /></td>
+                    <td>
+                        <%= po.cstegoryId.title %>
+                    </td>
+                    <td>
+                      <%= po.title %>
+                    </td>
+                    <td>
+                      <%= po.content %>
+                    </td>
+                    <td>
+                      <% if(po.isactive) { %>
+                        <a href="/admin/subcategory/activedata/<%= po.id %>">Active</a>
+                        <% } else { %>
+                          <a href="/admin/subcategory/deactivedata/<%= po.id %>">Deactive</a>
+                          <% } %>
+                    </td>
+                    <td><a href="/admin/subcategory/deleterecord/<%= po.id %>"><i class="me-2 mdi mdi-delete"
+                          style="color:gray; font-size: 25px;"></i></a>
+                    </td>
+                  </tr>
+                  <% ++i } %>
+
+
+              </tbody>
+            </table>
+          </form>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <%- include('footer') %>
+
+      <script>
+        $('#checkAll').click(function () {
+          $('input:checkbox').prop('checked', this.checked);
+        }); 
+      </script>

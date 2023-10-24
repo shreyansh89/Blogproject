@@ -1,0 +1,116 @@
+<%- include('header') %>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+      <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+          <h4 class="page-title">Tables</h4>
+          <div class="ms-auto text-end">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Library
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+      <!-- ============================================================== -->
+      <!-- Start Page Content -->
+      <!-- ============================================================== -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title mb-0">View Offer</h5>
+            </div>
+
+            <form>
+              <input type="text" name="search">
+              <input type="submit">
+            </form>
+
+            <form action="/admin/offer/multiofferdelete" method="post">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" style="display: flex;"><input type="checkbox" id="checkAll"><button type="submit"  value="submit" style=" border: none; background-color: transparent;"><i class="me-2 mdi mdi-delete"
+                    style="color:gray; font-size: 25px;"></i></button></th>
+                  <th scope="col">#</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Content</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% var i=1; for(var off of offerData){ %>
+                <tr>
+                  <th scope="row"><input type="checkbox" name="delAll[]" value="<%= off.id %>"></th>
+                  <th scope="row"><%= i %></th>
+                  <td><%= off.title %></td>
+                  <td><%= off.content %></td>
+                  <td>
+                    <% if(off.isactive) { %>
+                      <a href="/admin/offer/activedata/<%= off.id %>">Active</a>
+                    <% } else { %>
+                      <a href="/admin/offer/deactivedata/<%= off.id %>">Deactive</a>
+                    <% } %>
+                  </td>
+                  <td><img src="<%= off.slider_image %>" height="70" /></td>
+                  <td><a href="/admin/offer/deleteRecord/<%= off.id %>"><i class="me-2 mdi mdi-delete" style="color:gray; font-size: 25px;"></i></a> 
+                    ||
+                  <a href="/admin/offer/UpdateRecord/<%= off.id %>"><i style="color:gray; font-size: 25px;" class="me-2 mdi mdi-tooltip-edit"></i></a></td>
+                </tr>
+                <% ++i } %>
+
+                    <!-- <tr>
+                      <td colspan="10" align="center">
+                        <% for(var i=0; i< totalpage; i++) { %>
+                          <a href="?page=<%= i %>&search=<%= search %>" class="btn btn-success"><%= i+1 %></a>
+                        <% } %>
+                      </td>
+                    </tr> -->
+
+                    <tr>
+                      <td colspan="10" align="center">
+                        <% var prev = currentpage-1; if(prev > -1) {%>
+                          <a href="?page=<%= prev %>&search=<%= search %>" class="btn btn-success">Prev</a>
+                        <% } %>
+
+                        <% var nn = parseInt(currentpage) + parseInt(1); if(nn > 0) { %>
+                          <a href="?page=<%= nn %>&search=<%= search %>" class="btn btn-success"><%= nn %></a>
+                        <% } %>
+
+                        <% var next = parseInt(currentpage)+1; if(next < totalpage) {%>
+                          <a href="?page=<%= next %>&search=<%= search %>" class="btn btn-success">Next</a>
+                        <% } %>
+                      </td>
+                    </tr>
+
+              </tbody>
+            </table>
+          </form>
+          </div>
+         
+        </div>
+      </div>
+     
+    </div>
+   
+    <%- include('footer') %>
+
+    <script>
+      $('#checkAll').click(function () {
+        $('input:checkbox').prop('checked', this.checked);
+      }); 
+    </script>

@@ -1,0 +1,88 @@
+<%- include('header') %>
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+      <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+          <h4 class="page-title">Tables</h4>
+          <div class="ms-auto text-end">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Library
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+      <!-- ============================================================== -->
+      <!-- Start Page Content -->
+      <!-- ============================================================== -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title mb-0">View Photo</h5>
+            </div>
+
+            <form>
+              <input type="text" name="search">
+              <input type="submit">
+            </form>
+
+            <form action="/admin/category/deleteMultiRecord" method="post">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" style="display: flex;"><input type="checkbox" id="checkAll"><button type="submit"  value="submit" style=" border: none; background-color: transparent;"><i class="me-2 mdi mdi-delete"
+                    style="color:gray; font-size: 25px;"></i></button></th>
+                  <th scope="col">#</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% var i=1; for(var p of category){ %>
+                  <tr>
+                    <th scope="row"><input type="checkbox" name="delAll[]" value="<%= p.id %>"></th>
+                    <th scope="row"><%= i %></th>
+                    <td><%= p.title %></td>
+                  
+                    <td>
+                      <% if(p.isactive) {%>
+                        <a href="/admin/category/activedata/<%= p.id %>">Active</a>
+                      <% } else { %>
+                        <a href="/admin/category/deactivedata/<%= p.id %>">Deactive</a>
+                      <% } %>
+                    </td>
+                    <td><a href="/admin/category/deleteRecord/<%= p.id %>"><i class="me-2 mdi mdi-delete" style="color:gray; font-size: 25px;"></i></a> 
+                    
+                  </tr>
+                  <% ++i } %>
+
+              </tbody>
+            </table>
+            </form>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+   
+    <%- include('footer') %>
+
+    <script>
+      $('#checkAll').click(function () {
+        $('input:checkbox').prop('checked', this.checked);
+      }); 
+    </script>
