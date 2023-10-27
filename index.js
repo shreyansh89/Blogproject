@@ -6,7 +6,17 @@ const app = express();
 
 const path = require("path")
 
-const db = require("./config/mongoose");
+const mongoose = require("mongoose");
+
+mongoose.connect("mongodb+srv://shreyanshbuha89:shreyansh7889@cluster0.7xzeqis.mongodb.net/Bloging", {
+   useNewUrlParser: true,
+   useUnifiedTopology: true
+}).then((res)=>{
+    console.log("connected");
+})
+.catch((err)=>{
+    console.log(err);
+})
 
 const admin = require("./models/adminmodel");
 
